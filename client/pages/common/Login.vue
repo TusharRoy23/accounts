@@ -41,9 +41,9 @@
                             </b-card>
                             <b-card no-body class="text-white bg-primary py-5 d-md-down-none" style="width:44%">
                             <b-card-body class="text-center">
-                                <div>
+                                <!-- <div>
                                     <h2>Sign up</h2>
-                                    <!-- <b-form @submit="register">
+                                    <b-form @submit="register">
                                         
                                             <b-form-group>
                                                 <label for="company">Full Name</label>
@@ -94,8 +94,8 @@
                                                     class="px-4"
                                                 />
                                             </b-form-group>
-                                    </b-form> -->
-                                </div>
+                                    </b-form>
+                                </div> -->
                             </b-card-body>
                             </b-card>
                         </b-card-group>

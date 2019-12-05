@@ -41,7 +41,7 @@
                             </b-card>
                             <b-card no-body class="text-white bg-primary py-5 d-md-down-none" style="width:44%">
                             <b-card-body class="text-center">
-                                <!-- <div>
+                                <div>
                                     <h2>Sign up</h2>
                                     <b-form @submit="register">
                                         
@@ -49,9 +49,9 @@
                                                 <label for="company">Full Name</label>
                                                 <form-input 
                                                     type="text"
-                                                    :value="model.username"
+                                                    :value="registerModel.username"
                                                     name="username"
-                                                    v-model="model.username"
+                                                    v-model="registerModel.username"
                                                     v-validate="'required'"
                                                     placeholder="Enter your full name"
                                                     :error="errors.first('username')"
@@ -61,9 +61,9 @@
                                                 <label for="vat">E-mail</label>
                                                 <form-input 
                                                     type="email"
-                                                    :value="model.email"
+                                                    :value="registerModel.email"
                                                     name="email"
-                                                    v-model="model.email"
+                                                    v-model="registerModel.email"
                                                     v-validate="'required'"
                                                     placeholder="example@mail.com"
                                                     :error="errors.first('email')"
@@ -73,9 +73,9 @@
                                                 <label for="street">Password</label>
                                                 <form-input 
                                                     type="password"
-                                                    :value="model.password"
+                                                    :value="registerModel.password"
                                                     name="password"
-                                                    v-model="model.password"
+                                                    v-model="registerModel.password"
                                                     v-validate="'required'"
                                                     placeholder="Enter your password"
                                                     :error="errors.first('password')"
@@ -95,7 +95,7 @@
                                                 />
                                             </b-form-group>
                                     </b-form>
-                                </div> -->
+                                </div>
                             </b-card-body>
                             </b-card>
                         </b-card-group>
@@ -115,6 +115,11 @@ export default {
     data() {
         return {
             model: {
+                username:'',
+                password:'',
+                email: ''
+            },
+            registerModel: {
                 username:'',
                 password:'',
                 email: ''
@@ -166,13 +171,10 @@ export default {
         },
         register(e) {
             e.preventDefault()
-            this.$validator.validate().then(isValid => {
-                if (!isValid) {
-                    return 
-                }
+            console.log(this.registerModel);
 
-                this.toggleLoading()
-                this.$store.dispatch(POST_REGISTER, this.model)
+            this.toggleLoading()
+                this.$store.dispatch(POST_REGISTER, this.registerModel)
                 .then((response) => {
                     this.toggleLoading()
                     console.log(response.data)
@@ -189,7 +191,14 @@ export default {
                         });
                     });
                 });
-            })
+            // this.$validator.validate().then(isValid => {
+            //     if (!isValid) {
+            //         return 
+            //     }
+
+                
+                
+            // })
         }
     },
 }

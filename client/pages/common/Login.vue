@@ -164,7 +164,7 @@ export default {
                 this.toggleLoading()
                 this.$store.dispatch(POST_LOGIN, this.model)
                 .then((response) => {
-                    
+                    this.toggleLoading()
                     if (response.data.status) {
                         this.setAuth(response.data)
                         this.$router.push('/dashboard');
@@ -175,7 +175,7 @@ export default {
                     
                 })
                 .catch(error => {
-                    console.log(error);
+                    this.toggleLoading()
                   
                     Object.keys(error.response.data).forEach(field => {
                         this.errors.add({
@@ -185,7 +185,7 @@ export default {
                     });
                 });
 
-                this.toggleLoading()
+                
             })
         },
         getRegister(getRegister) {

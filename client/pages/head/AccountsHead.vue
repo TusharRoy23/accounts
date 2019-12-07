@@ -2,34 +2,33 @@
     <div class="animated fadeIn">
         <b-row>
             <b-col sm="5">
-                <b-form @submit="createSubHead">
+                <b-form @submit.prevent="createSubHead('createSubHead')" data-vv-scope="createSubHead">
                     <b-card>
                         <div slot="header">
                             <strong>Sub-Head </strong><small>Settings</small>
                         </div>
                         <b-form-group>
                             <label for="company">Head Name</label>
-                            <b-form-select 
-                                id="basicSelect"
+                            <b-form-select
                                 :plain="true"
-                                :options="['Please select','Asset', 'Liabilities', 'Income', 'Expenses']"
-                                value="Please select"
+                                :options="['-- Please select --','Asset', 'Liabilities', 'Income', 'Expenses']"
                                 v-model="model.head"
                             >
                             </b-form-select>
                         </b-form-group>
                         <b-form-group>
                             <label for="company">Sub-Head Name</label>
-                            <form-input 
-                                type="text"
-                                :value="model.subHead"
-                                name="subHead"
+                            <b-form-input 
+                                name="subHead" 
+                                v-validate="'required|min:2'" 
+                                class="form-control"
+                                type="text" 
                                 v-model="model.subHead"
-                                v-validate="'required'"
                                 placeholder="Enter Sub-Head name"
-                                :error="errors.first('subHead')"
-                            />
+                            >
+                            </b-form-input>
                         </b-form-group>
+                        <span v-show="errors.has('createSubHead.subHead')" style="color:#ff7979">{{ errors.first('createSubHead.subHead') }}</span>
                         <b-form-group>
                             <div class="form-row">
                                 <div class="col-sm-2">
@@ -50,23 +49,16 @@
                         
                         <b-form-group>
                             <label for="country"></label>
-                            <btn 
+                            <b-button 
                                 type="submit" 
-                                size="lg" 
-                                :variant="primary"
-                                label="Create"
-                                :disabled="loading"
-                                :loading="loading"
+                                size="md" 
+                                variant="primary"
                                 class="px-4"
-                            />
+                            >
+                                <loader v-if="subHeadLoader" />
+                                <span v-else>Create</span>
+                            </b-button>
                         </b-form-group>
-                        <b-alert :show="dismissCountDown"
-                                dismissible
-                                fade
-                                @dismiss-count-down="countDownChanged"
-                                :variant="varient">
-                            Alert will dismiss after {{dismissCountDown}} seconds...
-                        </b-alert>
                     </b-card>
                 </b-form>
             </b-col>
@@ -134,15 +126,8 @@
                         </div>
                         <b-form-group>
                             <label for="company">Sub-Head Name</label>
-                            <!-- <b-form-select 
-                                id="basicSelect"
-                                :plain="true"
-                                :options="[{{getSubHeadList}}]"
-                                value="Please select"
-                                v-model="subhead.subheadName"
-                            >
-                            </b-form-select> -->
-                            <b-form-select v-model="subhead.subheadName">
+                            <b-form-select v-model="subhead.subheadName" :plain="true" id="basicSelect">
+                                <option value="Please select">-- Please select --</option>
                                 <option v-for="(sub, index) in subHeadList" :key="index" :value="sub._id">
                                     {{sub.subHeadName}}
                                 </option>
@@ -191,13 +176,6 @@
                                 class="px-4"
                             />
                         </b-form-group>
-                        <b-alert :show="dismissCountDown"
-                                dismissible
-                                fade
-                                @dismiss-count-down="countDownChanged"
-                                :variant="varient">
-                            Alert will dismiss after {{dismissCountDown}} seconds...
-                        </b-alert>
                     </b-card>
                 </b-form>
             </b-col>
@@ -268,33 +246,38 @@ export default {
     data() {
         return {
             model: {
-                head: '',
+                head: '-- Please select --',
                 subHead: '',
                 subHeadStatus: 1
             },
             subhead: {
-                subheadName: '',
+                subheadName: 'Please select',
                 subSubHead: '',
                 subHeadStatus: 1
             },
             dismissSecs: 5,
             dismissCountDown: 0,
-            varient: 'success'
+            varient: 'success',
+            subHeadLoader: false
         }
     },
     methods: {
-        createSubHead (e) {
-            e.preventDefault();
-            
-            this.$validator.validate().then(isValid => {
+        createSubHead (createSubHead) {
+            this.$validator.validateAll(createSubHead).then(isValid => {
+                if (!isValid) {
+                    return
+                }
+
+                this.subHeadLoader = true;
                 this.$store.dispatch(CREATE_SUBHEAD, this.model)
                 .then((response) => {
+                    this.subHeadLoader = false;
                     if(response.data) {
                         this.getSubHeadList();
                     }
                 })
                 .catch(error => {
-                    console.log(error);
+                    this.subHeadLoader = false;
                 })
             })
         },

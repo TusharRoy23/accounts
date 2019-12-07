@@ -37,7 +37,7 @@
                                         <span v-if="error.loginErr" style="color:#ff7979">{{error.loginErr}}</span>
                                         <b-row>
                                             <b-col cols="6">
-                                            <btn 
+                                                <!-- <btn 
                                                     type="submit" 
                                                     size="md" 
                                                     :variant="primary"
@@ -45,7 +45,16 @@
                                                     :disabled="loading"
                                                     :loading="loading"
                                                     class="px-4"
-                                                />
+                                                /> -->
+                                                <b-button 
+                                                    type="submit" 
+                                                    size="md" 
+                                                    variant="primary"
+                                                    class="px-4"
+                                                >
+                                                    <loader v-if="loginLoader" />
+                                                    <span v-else>Sign In</span>
+                                                </b-button>
                                             </b-col>
                                             <!-- <b-col cols="6" class="text-right">
                                             <b-button variant="link" class="px-0">Forgot password?</b-button>
@@ -148,7 +157,8 @@ export default {
             },
             success: {
                 regMsg: ''
-            }
+            },
+            loginLoader: false
         }
     },
     methods: {
@@ -161,10 +171,10 @@ export default {
                     return 
                 }
 
-                this.toggleLoading()
+                this.loginLoader = true;
                 this.$store.dispatch(POST_LOGIN, this.model)
                 .then((response) => {
-                    this.toggleLoading()
+                    this.loginLoader = false;
                     if (response.data.status) {
                         this.setAuth(response.data)
                         this.$router.push('/dashboard');
@@ -175,7 +185,7 @@ export default {
                     
                 })
                 .catch(error => {
-                    this.toggleLoading()
+                    this.loginLoader = false;
                   
                     Object.keys(error.response.data).forEach(field => {
                         this.errors.add({
@@ -200,7 +210,6 @@ export default {
                     if (response.data.status) {
                         this.setAuth(response.data)
                         this.success.regMsg = "User Created Successful !";
-                        // this.$router.push('/dashboard');
                     }
                 })
                 .catch(error => {

@@ -1,7 +1,7 @@
 {
-  "name": "vms",
+  "name": "accounts",
   "version": "1.0.0",
-  "description": "vehicle management system",
+  "description": "Simple Account management system",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node server/index",

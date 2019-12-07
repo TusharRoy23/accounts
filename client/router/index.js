@@ -1,16 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Login from '@pages/common/Login.vue';
-import Dashboard from '@pages/dashboard/Dashboard.vue';
+const Login = () => import('@pages/common/Login.vue');
+const Dashboard = () => import('@pages/dashboard/Dashboard.vue');
 
-import DefaultContainer from '@pages/DefaultContainer.vue';
-import Profile from '@pages/settings/Profile.vue';
+const DefaultContainer = () => import('@pages/DefaultContainer.vue');
+const Profile = () => import('@pages/settings/Profile.vue');
 
-import Item from '@pages/item/Item.vue';
-import Category from '@pages/category/Category.vue';
+const Item = () => import('@pages/item/Item.vue');
+const Category = () => import('@pages/category/Category.vue');
 
-import AccountsHead from '@pages/head/AccountsHead.vue';
+const AccountsHead = () => import('@pages/head/AccountsHead.vue');
 
 Vue.use(Router);
 

@@ -1,23 +1,28 @@
 import User from "@model/User";
 
 const login = async (req, res) => {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.findOne({ userEmail:username });
+    const user = await User.findOne({ userEmail:email });
     if (user) {
         if (user.comparePasswords(password)) {
             const token = user.generateToken();
             req.session.token = token;
             req.session.userId = user._id;
 
-            return res.json({
-                user, token
+            return res.status(201).json({
+                user, 
+                token,
+                status: true 
             });
         }
     }
-    return res.status(400).json({
-        username: 'Username/Password is incorrect !'
-    });
+    else{
+        return res.status(201).json({
+            msg: 'Username/Password is incorrect !',
+            status: false
+        });
+    }
 };
 
 const getUserInfo = async (req, res) => {
@@ -58,16 +63,23 @@ const getUserDetails = async (req, res) => {
 };
 
 const register = async (req, res) => {
-    const { email, password, username } = req.body;
+    const { regEmail, regPassword, regUsername } = req.body;
 
     const user = await User.create({
-        userName: username,
-        userEmail: email,
-        userPassword: password
+        userName: regUsername,
+        userEmail: regEmail,
+        userPassword: regPassword
     });
 
-    const token = user.generateToken();
-    return res.status(201).json({user, token});
+    if (user) {
+        const token = user.generateToken();
+        return res.status(201).json({user, token, status: true});
+    }
+    else{
+        return res.status(201).json({
+            status: false
+        });
+    }
 };
 
 const logout = async (req, res) => {

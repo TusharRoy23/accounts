@@ -12,10 +12,10 @@ subHeadRouter.get('/getSubHeadList', subHeadController.getSubHeadList);
 subHeadRouter.post('/deleteSubHead', subHeadController.deleteSubHead);
 subHeadRouter.post('/updateStatus', subHeadController.updateStatus);
 
-// subHeadRouter.post('/updateSubSubHead', subHeadController.updateSubSubHead);
-// subHeadRouter.post('/createSubSubHead', subHeadController.createSubSubHead);
-// subHeadRouter.get('/getSubSubHeadList', subHeadController.getSubSubHeadList);
-// subHeadRouter.post('/deleteSubSubHead', subHeadController.deleteSubSubHead);
-// subHeadRouter.post('/updateSubSubStatus', subHeadController.updateSubSubStatus);
+subHeadRouter.post('/updateSubSubHead', subHeadController.updateSubSubHead);
+subHeadRouter.post('/createSubSubHead', subHeadController.createSubSubHead);
+subHeadRouter.get('/getSubSubHeadList', subHeadController.getSubSubHeadList);
+subHeadRouter.post('/deleteSubSubHead', subHeadController.deleteSubSubHead);
+subHeadRouter.post('/updateSubSubStatus', subHeadController.updateSubSubStatus);
 
 export default subHeadRouter;

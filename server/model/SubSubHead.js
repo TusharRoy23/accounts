@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 
 var SubSubHeadSchema = new mongoose.Schema({
-    subHeadName: {
-        type: String,
+    subHeadID: {
+        type: mongoose.Schema.ObjectId,
         required: true,
         trim: true
     },

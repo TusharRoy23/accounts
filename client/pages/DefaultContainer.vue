@@ -26,10 +26,11 @@
 <script>
 import nav from '@navbar'
 import { Sidebar as AppSidebar, SidebarFooter, SidebarForm, SidebarHeader, SidebarMinimizer, SidebarNav, Aside as AppAside, Breadcrumb } from '@coreui/vue'
-import DefaultAside from '@common/DefaultAside.vue'
-import DefaultHeader from '@common/DefaultHeader.vue'
-import DefaultFooter from '@common/DefaultFooter.vue'
-import DefaultHeaderDropdownAccnt from '@common/DefaultHeaderDropdownAccnt.vue'
+
+const DefaultAside = () => import('@common/DefaultAside.vue');
+const DefaultHeader = () => import('@common/DefaultHeader.vue');
+const DefaultFooter = () => import('@common/DefaultFooter.vue');
+const DefaultHeaderDropdownAccnt = () => import('@common/DefaultHeaderDropdownAccnt.vue');
 
 export default {
     name: 'Home',

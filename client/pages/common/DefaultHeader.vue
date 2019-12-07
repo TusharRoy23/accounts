@@ -22,7 +22,7 @@
 </template>
 <script>
 import { Header as AppHeader, SidebarToggler, AsideToggler } from '@coreui/vue'
-import DefaultHeaderDropdownAccnt from '@common/DefaultHeaderDropdownAccnt.vue'
+const DefaultHeaderDropdownAccnt = () => import('@common/DefaultHeaderDropdownAccnt.vue');
 
 export default {
   name: 'DefaultHeader',

@@ -4,11 +4,13 @@ import store from './store';
 import Validator from 'vee-validate';
 import BootstrapVue from 'bootstrap-vue';
 
-import Main from './pages/Main.vue';
+// import Main from './pages/Main.vue';
+const Main = () => import('./pages/Main.vue');
 
-import TextInput from '@components/TextInput.vue';
-import Loader from '@components/Loader.vue';
-import Button from '@components/Button.vue';
+const TextInput = () => import('@components/TextInput.vue');
+const Loader = () => import('@components/Loader.vue');
+const Button = () => import('@components/Button.vue');
+
 import authMixin from '@client/mixins/auth';
 import various from '@client/mixins/various';
 
